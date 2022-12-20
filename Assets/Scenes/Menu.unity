@@ -700,6 +700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2230ff48c7ff542b22946fe8e6ffb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseMenu: {fileID: 0}
+  audioMixer: {fileID: 0}
 --- !u!95 &1069679047
 Animator:
   serializedVersion: 3
@@ -1139,6 +1141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2230ff48c7ff542b22946fe8e6ffb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseMenu: {fileID: 0}
+  audioMixer: {fileID: 0}
 --- !u!1 &1937190374
 GameObject:
   m_ObjectHideFlags: 0
