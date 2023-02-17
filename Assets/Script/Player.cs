@@ -6,96 +6,127 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
+
     private Rigidbody2D rd;
     private Animator anim;
+    private Collider2D discoll;
 
-    public Transform CellingCheck,GroundCheck;
-    public AudioSource jumpAudio,hurtAudio,cherryAudio;
-    public Collider2D coll;
-    public Collider2D Discoll;
+    [Space(10)]
+    public Transform cellingCheck,groundCheck;
     public LayerMask ground;
+
+    [Space(10)]
     public float speed;
-    public float jumpfarce;
-    public int Cherry;
+    public float jumpFarce;
 
-    public Text CherryNum;
-    private bool isHurt;
-    private bool isGround,isJump;
-    private int extraJump;
+    [Space(10)]
+    public int cherry;
+    public Text cherryNum;
 
+    [Space(10)]
     bool jumpPressed;
     int jumpCount;
 
-    // Start is called before the first frame update
-    void Start()
+    [Space(10)]
+    public bool isHurt;
+    public bool isGround;
+    public bool playEnd;
+    public bool canMove;
+
+    void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(this);
+        }
+        instance = this;
+
+        discoll = GetComponent<BoxCollider2D>();
         rd = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {   
-        isGround = Physics2D.OverlapCircle(GroundCheck.position, 0.1f, ground);
-        if (!isHurt)
+        isGround = Physics2D.OverlapCircle(groundCheck.position, 0.1f, ground);
+
+        if (!playEnd)
         {
-            Movement();
-        }             
+            if (!isHurt && canMove)
+            {
+                Movement();
+                Jump();            
+                Crouch();                
+            }
+        }
+        else
+        {
+            canMove = false;
+        }
         SwitchAnim();
-        newJump();
     }
 
     private void Update()
     {
         if (Input.GetButtonDown("Jump") && jumpCount > 0)
+        {
             jumpPressed = true;
-        Crouch();
-        //Jump();
-        CherryNum.text = Cherry.ToString();
-     
+        }
+
+        cherryNum.text = cherry.ToString();
+       
     }
 
     void Movement()
     {
-        float horiztalmove = Input.GetAxisRaw("Horizontal");
-        rd.velocity = new Vector2(horiztalmove * speed, rd.velocity.y);
+        float horiztalMove = Input.GetAxisRaw("Horizontal");
+        rd.velocity = new Vector2(horiztalMove * speed*Time.fixedDeltaTime, rd.velocity.y);
 
-        if (horiztalmove != 0)
+        if (horiztalMove != 0)
         {
-            transform.localScale = new Vector3(horiztalmove, 1, 1);
-        }
-
+            transform.localScale = new Vector3(horiztalMove, 1, 1);
+        }       
     }
 
     //切換動畫效果
     void SwitchAnim()
     {
-        //anim.SetBool("idle", false);
-
         anim.SetFloat("running", Mathf.Abs(rd.velocity.x));
-        if (isGround)
+
+        if(isGround && isHurt)
         {
+            canMove = false;
+
+        }   
+        else if (isGround)
+        {
+            canMove = true;
             anim.SetBool("falling", false);
-        }
-        else if (isHurt)
-        {
-            anim.SetBool("hurt", true);
-            anim.SetFloat("running", 0);
-            if (Mathf.Abs(rd.velocity.x) < 0.1f)
-            {
-                anim.SetBool("hurt", false);
-                //anim.SetBool("idle", true);
-                isHurt = false;
-            }
-        }
+        }       
         else if (!isGround && rd.velocity.y > 0)
         {
             anim.SetBool("jumping", true);
+            anim.SetBool("falling", false);
         }
         else if (rd.velocity.y < 0)
         {
             anim.SetBool("jumping", false);
             anim.SetBool("falling", true);
+        }
+
+        if (isHurt)
+        {
+            canMove = false;
+            anim.SetBool("hurt", true);
+
+            anim.SetFloat("running", 0);
+            if (Mathf.Abs(rd.velocity.x) < 0.1f)
+            {
+                isHurt = false;
+                anim.SetBool("hurt", false);
+                canMove = true;
+            }
         }
     }
    
@@ -103,18 +134,14 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //收集物品
-        if (collision.tag == "Collection")
+        if (collision.tag == "Cherry")
         {
-            // cherryAudio.Play();
             SoundManager.instance.CherryAudio();
-            //Destroy(collision.gameObject);
             collision.GetComponent<Animator>().Play("isCot");
-            //Cherry += 1;   
-            //CherryNum.tag = Cherry.ToString();
+            
         }
         if (collision.tag == "DeadLine")
         {
-            //GetComponent<AudioSource>().enabled = false;
             Invoke("Restart", 2f);
         }
     }
@@ -128,82 +155,66 @@ public class Player : MonoBehaviour
             if (anim.GetBool("falling"))
             {
                 enemy.JumpOn();
-                rd.velocity = new Vector2(rd.velocity.x, jumpfarce);
+                rd.velocity = new Vector2(rd.velocity.x, jumpFarce);
                 anim.SetBool("jumping", true);
             }
             else if (transform.position.x < collision.gameObject.transform.position.x) 
             {
-                rd.velocity = new Vector2(-3, rd.velocity.y);
-                //hurtAudio.Play();
+                rd.velocity = new Vector2(-5, rd.velocity.y);
                 SoundManager.instance.HurtAudio();
-                isHurt = true;
+                isHurt = true;                
+                canMove = false;
             }
             else if (transform.position.x > collision.gameObject.transform.position.x)
             {
-                rd.velocity = new Vector2(3, rd.velocity.y);
-                //hurtAudio.Play(); 
+                rd.velocity = new Vector2(5, rd.velocity.y);
                 SoundManager.instance.HurtAudio();
                 isHurt = true;
+                canMove = false;
             }
-        }
+        }        
     } 
     
     //蹲下趴下
     void Crouch()
     {
-        if (!Physics2D.OverlapCircle(CellingCheck.position, 0.2f, ground))
+        if (!Physics2D.OverlapCircle(cellingCheck.position, 0.2f, ground) )
         {
-            if (Input.GetButton("Crouch"))
+            if (Input.GetButton("Crouch") &&isGround )
             {
                 anim.SetBool("crouching", true);
-                Discoll.enabled = false;
+                discoll.enabled = false;
             }
             else 
             {
                 anim.SetBool("crouching", false);
-                Discoll.enabled = true;
+                discoll.enabled = true;
             }
         }        
     }
 
-    //腳色跳躍
-    /*void Jump()
-    {
-        if (Input.GetButton("Jump") && coll.IsTouchingLayers(ground))
-        {
-            rd.velocity = new Vector2(0, jumpfarce);
-            jumpAudio.Play();
-            anim.SetBool("jumping", true);
-        }
-    }*/
-
-    void newJump()
+    void Jump()
     {
         if (isGround)
         {
             jumpCount = 2;
-            isJump = false;
         }
-        if (jumpPressed && isGround)
+        if (jumpPressed && isGround) 
         {
-            isJump = true;
-            rd.velocity = new Vector2(rd.velocity.x, jumpfarce);
+            rd.velocity = new Vector2(rd.velocity.x, jumpFarce);
             jumpCount--;
             jumpPressed = false;
-
-            //gameObject.GetComponent<AudioSource>().PlayOneShot(Jump);
+            SoundManager.instance.JumpAudio();
         }
-        else if (jumpPressed && jumpCount > 0 && isJump)
+        else if (jumpPressed && jumpCount > 0)
         {
-            rd.velocity = new Vector2(rd.velocity.x, jumpfarce);
+            rd.velocity = new Vector2(rd.velocity.x, jumpFarce);
             jumpCount--;
             jumpPressed = false;
-
-            //gameObject.GetComponent<AudioSource>().PlayOneShot(Jump);
-
+            SoundManager.instance.JumpAudio();
         }
     }
-
+    
     //重製當前場景
     void Restart()
     {
@@ -212,6 +223,6 @@ public class Player : MonoBehaviour
 
     public void CherryCount()
     {
-        Cherry += 1;
+        cherry += 1;
     }
 }

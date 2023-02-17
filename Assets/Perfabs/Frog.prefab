@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335689794603982344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.02, y: -1.2567403, z: -4.763325}
+  m_LocalPosition: {x: -2.16, y: -1.2567403, z: -4.763325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1335689796126529047}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335689795069408423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.17, y: -1.2567403, z: -4.763325}
+  m_LocalPosition: {x: -4.31, y: -1.2567403, z: -4.763325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1335689796126529047}
@@ -70,9 +70,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1335689796126529047}
   - component: {fileID: 1335689796126529515}
-  - component: {fileID: 1335689796126529514}
   - component: {fileID: 1335689796126529513}
   - component: {fileID: 1335689796126529512}
+  - component: {fileID: 181892481}
   - component: {fileID: 1335689796126529516}
   - component: {fileID: 6486033253123562175}
   m_Layer: 0
@@ -116,7 +116,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,8 +134,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2045149805
-  m_SortingLayer: 3
+  m_SortingLayerID: 1092826127
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 86ca59b9bca0e409b9ba2784fbe69f01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -148,32 +148,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1335689796126529514
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335689796126529046}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.04906866, y: -0.1612525}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.1875, y: 2}
-    newSize: {x: 2.1875, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.3573024, y: 1.032485}
-  m_EdgeRadius: 0
 --- !u!50 &1335689796126529513
 Rigidbody2D:
   serializedVersion: 4
@@ -187,7 +161,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 8
   m_Material: {fileID: 0}
@@ -214,6 +188,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &181892481
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335689796126529046}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.060000002, y: -0.04359913}
+  serializedVersion: 2
+  m_Radius: 0.6484417
 --- !u!114 &1335689796126529516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,11 +216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23706a3fb5af5447ba6da24b2d08f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Coll: {fileID: 181892481}
   ground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   speed: 5
-  jumpForce: 0
+  jumpForce: 15
   liftpoint: {fileID: 1335689795069408440}
   rightpoint: {fileID: 1335689794603982345}
 --- !u!82 &6486033253123562175
@@ -242,7 +233,8 @@ AudioSource:
   m_GameObject: {fileID: 1335689796126529046}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c0003f9f89817aa4fa1c4d0fad98063a,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 2adb857f469be6542b88433c6cb895b6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

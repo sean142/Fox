@@ -5,8 +5,9 @@ using UnityEngine;
 public class Cherry : MonoBehaviour
 {
    public void Death()
-    {
+   {
         FindObjectOfType < Player>().CherryCount();
-        Destroy(gameObject);
-    }
+        FindObjectOfType<EnterDirlog>().CherryEnding();
+        Destroy(gameObject);        
+   }   
 }

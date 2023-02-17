@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy_Frog : Enemy
 {
     private Rigidbody2D rb;
-    public  Collider2D Coll;
-   // private Animator anim;
+    private  Collider2D coll;
+
     public LayerMask ground;
     public float speed,jumpForce;
     public Transform liftpoint, rightpoint;
@@ -20,8 +20,7 @@ public class Enemy_Frog : Enemy
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        //anim = GetComponent<Animator>();
-        //Coll = GetComponent<Collider2D>();
+        coll = GetComponent<Collider2D>();
 
         transform.DetachChildren();
         liftx = liftpoint.position.x;
@@ -33,16 +32,14 @@ public class Enemy_Frog : Enemy
     // Update is called once per frame
     void Update()
     {
-        SwitchAnim();
-      
+        SwitchAnim();      
     }
-
     
-    void Movement()
+    public void Movement()
     {
         if (Facelift)//面左
         {
-            if (Coll.IsTouchingLayers(ground))
+            if (coll.IsTouchingLayers(ground))
             {
                 anim.SetBool("jumping", true);
                 rb.velocity = new Vector2(-speed, jumpForce);
@@ -55,7 +52,7 @@ public class Enemy_Frog : Enemy
         }
         else//面右
         {
-            if (Coll.IsTouchingLayers(ground))
+            if (coll.IsTouchingLayers(ground))
             {
                 anim.SetBool("jumping", true);
                 rb.velocity = new Vector2(speed, jumpForce);
@@ -78,7 +75,7 @@ public class Enemy_Frog : Enemy
                 anim.SetBool("falling", true);
             }
         }
-        if (Coll.IsTouchingLayers(ground) && anim.GetBool("falling"))
+        if (coll.IsTouchingLayers(ground) && anim.GetBool("falling"))
         {
             anim.SetBool("falling", false);
         }

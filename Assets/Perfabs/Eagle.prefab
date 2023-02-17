@@ -116,7 +116,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -201,9 +201,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.22758293, y: 0}
+  m_Offset: {x: -0.065968275, y: 0.05261886}
   serializedVersion: 2
-  m_Radius: 0.7152705
+  m_Radius: 1.1550124
 --- !u!114 &5460720337506445850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +228,8 @@ AudioSource:
   m_GameObject: {fileID: 5460720337506445854}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c0003f9f89817aa4fa1c4d0fad98063a,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 2adb857f469be6542b88433c6cb895b6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

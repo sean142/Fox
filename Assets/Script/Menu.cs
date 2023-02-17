@@ -8,12 +8,12 @@ public class Menu : MonoBehaviour
 {
     public GameObject PauseMenu;
     public AudioMixer audioMixer;
-
+    
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-
+    
     public void QuitGame()
     {
         Application.Quit();
@@ -27,7 +27,7 @@ public class Menu : MonoBehaviour
     public void PauseGame()
     {
         PauseMenu.SetActive(true);
-        Time.timeScale = 0f;
+        Time.timeScale = 0f;//遊戲暫停
     }
     public void ResumeGame()
     {

@@ -11,6 +11,11 @@ public class SoundManager : MonoBehaviour
 
     public void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(this);
+        }
+
         instance = this;
     }
 

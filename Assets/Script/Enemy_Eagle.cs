@@ -12,7 +12,7 @@ public class Enemy_Eagle : Enemy
 
     private bool isup;
 
-    protected override  void Start()
+    protected override void Start()
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
