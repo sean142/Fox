@@ -6,7 +6,7 @@ public class Cherry : MonoBehaviour
 {
    public void Death()
    {
-        FindObjectOfType < Player>().CherryCount();
+        FindObjectOfType <Player>().CherryCount();
         FindObjectOfType<EnterDirlog>().CherryEnding();
         Destroy(gameObject);        
    }   

@@ -16,12 +16,10 @@ public class Enemy_Eagle : Enemy
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        //coll = GetComponent<Collider2D>();
         TopY = top.position.y;
         BottomY = bottom.position.y;
         Destroy(top.gameObject);
         Destroy(bottom.gameObject);
-
     }
 
     // Update is called once per frame

@@ -4,10 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EndManager : MonoBehaviour
-{
-    //[SerializeField] private Player player;
-
-    //public float cherry;
+{   
     public GameObject finishUI;
     public GameObject FadeUI;
 
@@ -24,38 +21,16 @@ public class EndManager : MonoBehaviour
     {
         fadeCanvasGroup = GetComponent<CanvasGroup>();
         audioSource = GetComponent<AudioSource>();
-
     }
 
     void Start()
     {
-
         fruit = GameObject.FindGameObjectsWithTag("Cherry");
         fruitNum = fruit.Length;
-
     }
 
     public void CherryEnding()
-    {
-        //cherry--;
-        //for迴圈 寫偵測arrey是不是空的 arrey 長度
-        /*
-        for (int i = 0; i < fruit.Length; i++)
-        {
-            if (fruit[i] == null)
-            {
-                fruitNum--;
-            }
-        }*/
-        /*
-        fruitNum =0;
-        for (int i = 0; i < fruit.Length; i++)
-        {
-            if (fruit[i] != null)
-            {
-                fruitNum++;
-            }
-        }*/
+    { 
         fruitNum--;
         if (fruitNum == 0)
         {
@@ -79,7 +54,7 @@ public class EndManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DoAudioSourceVolumeOut()
+    IEnumerator DoAudioSourceVolumeOut()
     {
         float startVolume = audioSource.volume;
         float time = 0f;
@@ -90,12 +65,10 @@ public class EndManager : MonoBehaviour
             audioSource.volume = Mathf.Lerp(startVolume, 0f, time / restartTimer);
             yield return null;
         }
-
     }
+
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
-    }
-        
-
+    }      
 }

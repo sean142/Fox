@@ -34,10 +34,12 @@ public class Menu : MonoBehaviour
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
     }
+
     public void SetVolume(float value)
     {
         audioMixer.SetFloat("MainVolume",value);
     }
+
 }
 
 
